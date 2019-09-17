@@ -1,0 +1,14 @@
+{
+  "name": "microservices_v2",
+  "version": "0.0.1",
+  "description": "Boilerplate project for initializing microservices (frontend, backend and authorization gateway). Also let easy editing and adding new miscroservices.",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker-compose up",
+    "test:auth": "docker exec -it auth-service bash -c \"npm run test\"",
+    "test:backend": "docker exec -it backend bash -c \"npm run test\"",
+    "test": "docker exec -it auth-service bash -c \"npm run test\" && docker exec -it backend bash -c \"npm run test\""
+  },
+  "author": "Adomas Skliutas",
+  "license": "MIT"
+}
