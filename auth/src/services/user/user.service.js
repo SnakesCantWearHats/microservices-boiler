@@ -11,14 +11,24 @@ class UserService {
 	
 	async createNewUser(name, email, password) {
 		if (!name || !email || !password) {
-			throw new Error('No name, email or password supplied.');
+			throw new Error('No name, email and/or password supplied.');
 		}
-		const user = await this.userRepository.findUserByNameOrEmail(name, email);
-		if (user.length > 0) {
-			throw new Error('User already exists');
+		const users = await this.userRepository.findUsersByNameOrEmail(name, email);
+		if (users.length > 0) {
+			throw new Error('User already exists.');
 		}
 		const hashedPassword = await bcrypt.hash(password, saltRounds);
 		this.userRepository.createUser(name, email, hashedPassword);
+	}
+
+	async findUserByNameOrEmail(name, email) {
+		const user = await this.userRepository.findOneUserByNameOrEmail(name, email);
+
+		if(!user) {
+			throw new Error(`User ${name} with email ${email} doesn't exist.`);
+		}
+		console.log(user);
+		return user;
 	}
 }
 

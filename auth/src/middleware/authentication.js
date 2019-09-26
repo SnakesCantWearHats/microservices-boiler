@@ -1,0 +1,59 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+
+const container = require('../services/container');
+const { SERVICE_IDENTIFIERS } = require('../contants');
+
+const secret = 'secretzzzzz'
+
+const checkUserAndGenNewToken = async (name, email, password) => {
+	const userService = container(SERVICE_IDENTIFIERS.UserService);
+
+	const user = await userService.findUserByNameOrEmail(name, email);
+	if (await bcrypt.compare(password, user.password)) {
+		const token = jwt.sign(
+			{ name: user.name, email: user.email },
+			secret,
+			{ expiresIn: '1h' },
+		);
+		return { name: user.name, email: user.email, token };
+	} else {
+		throw new Error('Wrong password.');
+	}
+};
+
+const authentication = async (req, res, next) => {
+	const { name, email, password } = req.body;
+
+	try {
+		if (req.headers['jwt-token']) {
+			const token = req.headers['jwt-token'].slice(6);
+			const decoded = jwt.verify(token, secret);
+
+			const newToken = jwt.sign(
+				{name: decoded.name, email: decoded.email},
+				secret,
+				{ expiresIn: '1h' },
+			);
+
+			res.locals.user = { name: decoded.name, email: decoded.email };
+			res.append('JWT-Token', `Token-${newToken}`);
+			next();
+		} else if ((name || email) && password) {
+			const { name: userName, email: userEmail, token } = await checkUserAndGenNewToken(name, email, password);
+			res.locals.user = { name: userName, email: userEmail };
+			res.append('JWT-Token', `Token-${token}`);
+			next();
+		} else {
+			throw new Error('No credentials supplied');
+		}
+	} catch(err) {
+		res.status(401).json({
+			service: 'auth',
+			success: false,
+			message: err.message,
+		});
+	}
+};
+
+module.exports = authentication;

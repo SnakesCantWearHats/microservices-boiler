@@ -17,7 +17,7 @@ describe('Testing user service', () => {
 
 	it('Should call createNewUser method once and call user repository with same params but different password', async () => {
 		const userService = new UserService();
-		jest.spyOn(userService.userRepository, 'findUserByNameOrEmail').mockImplementation(() => []);
+		jest.spyOn(userService.userRepository, 'findUsersByNameOrEmail').mockImplementation(() => []);
 
 		expect(UserRepository).toHaveBeenCalledTimes(1);
 
@@ -34,9 +34,18 @@ describe('Testing user service', () => {
 
 	it('Should return an error if trying to add user that already exist', async () => {
 		const userService = new UserService();
-		jest.spyOn(userService.userRepository, 'findUserByNameOrEmail').mockImplementation(() => [{name, email}]);
+		jest.spyOn(userService.userRepository, 'findUsersByNameOrEmail').mockImplementation(() => [{name, email}]);
 
 		// await expect(userService.createNewUser(name, email, password)).toThrow();
 		await expect(userService.createNewUser(name, email, password)).rejects.toThrow();
+	});
+
+	it('Should find existing user, or return error if user doesn\'t exist', async () => {
+		const userService = new UserService();
+		jest.spyOn(userService.userRepository, 'findOneUserByNameOrEmail').mockImplementation((name) => name === 'user_exists' ? {name, email} : null);
+
+		await expect(userService.findUserByNameOrEmail(name, email)).rejects.toThrow();
+		
+		await expect(await userService.findUserByNameOrEmail('user_exists')).toEqual({ name: 'user_exists', email });
 	});
 });

@@ -1,10 +1,12 @@
 const express = require('express');
 
-const UserService = require('../services/user/user.service');
+const container = require('../services/container');
+const { SERVICE_IDENTIFIERS } = require('../contants');
+const authentication = require('../middleware/authentication');
 
 const router = express.Router();
 
-router.post('/login', (req, res, next) => {
+router.post('/login', authentication, (req, res, next) => {
 	console.log('login route');
 	res.json({
 		service: 'auth',
@@ -13,11 +15,11 @@ router.post('/login', (req, res, next) => {
 });
 
 router.post('/register', (req, res, next) => {
-	const userService = new UserService();
+	const userService = container(SERVICE_IDENTIFIERS.UserService);
+	const { name, email, password } = req.body;
 	try {
-		userService.createNewUser(req.body.name, req.body.email, req.body.password);
+		userService.createNewUser(name, email, password);
 	} catch(err) {
-		console.log(err);
 		res.json({
 			service: 'auth',
 			success: false,

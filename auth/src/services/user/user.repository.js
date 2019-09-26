@@ -14,8 +14,22 @@ class UserRepository {
 		await newUser.save();
 	}
 
-	async findUserByNameOrEmail(name, email) {
+	async findUsersByNameOrEmail(name, email) {
 		const user = await User.find({
+			$or: [
+				{
+					name
+				},
+				{
+					email
+				}
+			]
+		}).lean();
+		return user;
+	}
+
+	async findOneUserByNameOrEmail(name, email) {
+		const user = await User.findOne({
 			$or: [
 				{
 					name
