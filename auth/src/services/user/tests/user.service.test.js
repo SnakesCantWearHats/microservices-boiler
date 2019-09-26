@@ -3,23 +3,24 @@ const UserService = require('../user.service');
 jest.mock('../user.repository');
 
 describe('Testing user service', () => {
+	const name = 'testname';
+	const email = 'test@test.com';
+	const password = 'password123';
 	beforeEach(() => {
 		UserRepository.mockClear();
 	});
 
-	test('Should call repository constructor once', () => {
+	it('Should call repository constructor once', () => {
 		const userService = new UserService();
 		expect(UserRepository).toHaveBeenCalledTimes(1);
 	});
 
-	test('Should create a new user', async () => {
+	it('Should call createNewUser method once and call user repository with same params but different password', async () => {
 		const userService = new UserService();
+		jest.spyOn(userService.userRepository, 'findUserByNameOrEmail').mockImplementation(() => []);
 
 		expect(UserRepository).toHaveBeenCalledTimes(1);
 
-		const name = 'testname';
-		const email = 'test@test.com';
-		const password = 'password123';
 		await userService.createNewUser(name, email, password);
 
 		const mockUserRepositoryInstance = UserRepository.mock.instances[0];
@@ -29,5 +30,13 @@ describe('Testing user service', () => {
 		expect(mockCreateUser.mock.calls[0][2]).not.toEqual(password);
 
 		expect(mockCreateUser).toHaveBeenCalledTimes(1);
+	});
+
+	it('Should return an error if trying to add user that already exist', async () => {
+		const userService = new UserService();
+		jest.spyOn(userService.userRepository, 'findUserByNameOrEmail').mockImplementation(() => [{name, email}]);
+
+		// await expect(userService.createNewUser(name, email, password)).toThrow();
+		await expect(userService.createNewUser(name, email, password)).rejects.toThrow();
 	});
 });
