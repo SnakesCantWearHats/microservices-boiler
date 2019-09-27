@@ -1,15 +1,18 @@
-const bcrypt = require('bcrypt');
+import 'reflect-metadata';
+import bcrypt from 'bcrypt';
+import { inject, injectable } from 'inversify';
 
-const UserRepository = require('./user.repository');
+// import UserRepository from './user.repository';
+import { IUserService, IUserRepository, IUserDocument } from './user.interface';
 
 const saltRounds = 12;
 
-class UserService {
-	constructor() {
-		this.userRepository = new UserRepository();
-	}
+@injectable()
+class UserService implements IUserService {
+	// TODO fix this
+	@inject('UserRepository') private userRepository: IUserRepository;
 	
-	async createNewUser(name, email, password) {
+	async createNewUser(name: string, email: string, password: string): Promise<void> {
 		if (!name || !email || !password) {
 			throw new Error('No name, email and/or password supplied.');
 		}
@@ -21,15 +24,14 @@ class UserService {
 		this.userRepository.createUser(name, email, hashedPassword);
 	}
 
-	async findUserByNameOrEmail(name, email) {
+	async findUserByNameOrEmail(name: string, email: string): Promise<IUserDocument> {
 		const user = await this.userRepository.findOneUserByNameOrEmail(name, email);
 
 		if(!user) {
 			throw new Error(`User ${name} with email ${email} doesn't exist.`);
 		}
-		console.log(user);
 		return user;
 	}
 }
 
-module.exports = UserService;
+export default UserService;

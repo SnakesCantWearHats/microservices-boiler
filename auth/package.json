@@ -4,21 +4,32 @@
   "description": "Authorization microservice",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "build": "tsc",
+    "start": "node_modules/tsc-watch/index.js --onSuccess 'node dist/server.js' --onFailure 'echo Compilation Failed!' --compiler typescript/bin/tsc",
     "test": "./node_modules/.bin/jest --config=jest-config.js"
   },
   "author": "Adomas Skliutas",
   "license": "MIT",
   "dependencies": {
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.1",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+    "bson": "^4.0.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "inversify": "^5.0.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.1",
-    "passport": "^0.4.0"
+    "passport": "^0.4.0",
+    "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
-    "jest": "^24.9.0"
+    "@types/jest": "^24.0.18",
+    "eslint": "^6.4.0",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "tsc-watch": "^4.0.0",
+    "typescript": "^3.6.3"
   }
 }

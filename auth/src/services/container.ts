@@ -1,4 +1,4 @@
-const UserService = require('./user/user.service');
+import UserService from './user/user.service';
 
 const services = {
 	UserService: new UserService(),
@@ -8,4 +8,4 @@ const container = (name) => {
 	return services[name];
 };
 
-module.exports = container;
+export default container;

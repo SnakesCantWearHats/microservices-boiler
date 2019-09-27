@@ -1,9 +1,8 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
-const routes = require('./src/routing');
-const db = require('./src/mongoose');
+import routes from './routing';
 
 const app = express();
 
@@ -13,8 +12,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
+app.get('/ping', (req, res) =>  {
+	res.json({ pong: 'pong' });
+});
+
 app.get('/', (req, res) => {
-	console.log('authentication got request');
 	res.json({ service: 'Auth', success: true });
 });
 

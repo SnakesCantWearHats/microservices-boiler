@@ -1,8 +1,8 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
-const container = require('../services/container');
-const { SERVICE_IDENTIFIERS } = require('../contants');
+import container from '../services/container';
+import { SERVICE_IDENTIFIERS } from '../contants';
 
 const secret = 'secretzzzzz'
 
@@ -56,4 +56,4 @@ const authentication = async (req, res, next) => {
 	}
 };
 
-module.exports = authentication;
+export default authentication;

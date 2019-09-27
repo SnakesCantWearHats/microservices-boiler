@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 mongoose.connect('mongodb://authorization-mongo:27017/demo', {useNewUrlParser: true});
 
@@ -8,6 +8,4 @@ db.once('open', function() {
   console.log('Connection succesful');
 });
 
-module.exports = {
-	db
-};
+export default db;

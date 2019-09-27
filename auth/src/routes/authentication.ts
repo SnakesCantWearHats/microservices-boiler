@@ -1,8 +1,8 @@
-const express = require('express');
+import express from 'express';
 
-const container = require('../services/container');
-const { SERVICE_IDENTIFIERS } = require('../contants');
-const authentication = require('../middleware/authentication');
+import container from '../services/container';
+import { SERVICE_IDENTIFIERS } from '../contants';
+import authentication from '../middleware/authentication';
 
 const router = express.Router();
 
@@ -32,4 +32,4 @@ router.post('/register', (req, res, next) => {
 	});
 });
 
-module.exports = router;
+export default router;

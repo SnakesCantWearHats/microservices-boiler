@@ -1,0 +1,21 @@
+{
+	"compilerOptions": {
+		"target": "ES2017",
+		"module": "commonjs",
+		"lib": ["es2017"],
+		"outDir": "dist",
+		"rootDir": "src",
+		"allowJs": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"esModuleInterop": true,
+		"incremental": true
+	},
+	"include": [
+        "./src/**/*"
+	],
+	"exclude": [
+		"node-modules",
+		"jest-config.js"
+	]
+  }
