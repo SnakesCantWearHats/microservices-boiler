@@ -21,7 +21,7 @@
 		"./src/**/*.ts"
 	],
 	"exclude": [
-		".src/**/*.test.ts",
+		"**/tests/*.test.ts",
 		"node-modules",
 		"jest-config.js"
 	]

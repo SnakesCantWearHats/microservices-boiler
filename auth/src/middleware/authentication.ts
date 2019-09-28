@@ -1,3 +1,4 @@
+import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
@@ -5,9 +6,10 @@ import container from '../services/container';
 import { SERVICE_IDENTIFIERS } from '../contants';
 import { IUserService } from '../services/user/user.interface';
 import secret from '../SECRET';
+import { tokenUser } from './types';
 
 
-const checkUserAndGenNewToken = async (name, email, password) => {
+const checkUserAndGenNewToken = async (name: string, email: string, password: string) => {
 	const userService = container.get<IUserService>(SERVICE_IDENTIFIERS.UserService);
 
 	const user = await userService.findUserByNameOrEmail(name, email);
@@ -23,7 +25,7 @@ const checkUserAndGenNewToken = async (name, email, password) => {
 	}
 };
 
-const authentication = async (req, res, next) => {
+const authentication = async (req: Request, res: Response, next: NextFunction) => {
 	const { name, email, password } = req.body;
 
 	try {
@@ -34,8 +36,8 @@ const authentication = async (req, res, next) => {
 			next();
 		}
 		if (req.headers['jwt-token']) {
-			const token = req.headers['jwt-token'].slice(6);
-			const decoded = jwt.verify(token, secret);
+			const token: string = req.headers['jwt-token'].slice(6) as string;
+			const decoded: tokenUser = jwt.verify(token, secret) as tokenUser;
 
 			const newToken = jwt.sign(
 				{name: decoded.name, email: decoded.email},
