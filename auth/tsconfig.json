@@ -5,17 +5,23 @@
 		"lib": ["es6"],
 		"outDir": "dist",
 		"rootDir": "src",
-		"allowJs": true,
-		"types": ["reflect-metadata"],
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true,
 		"esModuleInterop": true,
-		"incremental": true
+		"incremental": true,
+		"strictPropertyInitialization": false,
+		"types": ["reflect-metadata", "jest"],
+		"typeRoots": ["./types", "./node_modules/@types"],
+		"strict": true,
+		"declaration": true,
+		"sourceMap": true
 	},
 	"include": [
-		"./src/**/*"
+		"./src/**/*",
+		"./src/**/*.ts"
 	],
 	"exclude": [
+		".src/**/*.test.ts",
 		"node-modules",
 		"jest-config.js"
 	]

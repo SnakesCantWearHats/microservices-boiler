@@ -1,25 +1,24 @@
 {
-	"extends": "airbnb-base",
 	"rules": {
-	  "eol-last": "off",
-	  "no-underscore-dangle": "off",
-	  "func-names": ["error", "never"],
-	  "no-param-reassign": ["error", { "props": false }],
-	  "arrow-body-style": "off",
-	  "arrow-parens": "off",
-	  "consistent-return": "off",
-	  "no-shadow": "off",
-	  "dot-notation": "off",
-	  "object-shorthand": "off",
-	  "no-await-in-loop": "off"
+		"eol-last": 2,
+		"no-underscore-dangle": "off",
+		"func-names": ["error", "never"],
+		"no-param-reassign": ["error", { "props": false }],
+		"arrow-body-style": "warn",
+		"arrow-parens": "error",
+		"consistent-return": "warn",
+		"no-shadow": "warn",
+		"dot-notation": "warn",
+		"object-shorthand": "warn",
+		"no-await-in-loop": "off"
 	},
 	"env": {
-	  "node": true,
-	  "mocha": true
+		"node": true,
+		"jest": true
 	},
 	"globals": {
-	  "rootRequire": true,
-	  "logger": true,
-	  "backendEvents": true
+		"rootRequire": true,
+		"logger": true,
+		"backendEvents": true
 	}
-  }
+}
