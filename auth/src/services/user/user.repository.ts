@@ -1,11 +1,12 @@
 import { injectable } from 'inversify';
+import 'reflect-metadata';
 
 import User from './schema';
 import { IUserDocument, IUserRepository } from './user.interface';
 
 @injectable()
 class UserRepository implements IUserRepository {
-	async createUser(name: string, email: string, password: string): Promise<void> {
+	public async createUser(name: string, email: string, password: string): Promise<void> {
 		const newUser = new User({
 			name,
 			password,
@@ -14,7 +15,8 @@ class UserRepository implements IUserRepository {
 		await newUser.save();
 	}
 
-	async findUsersByNameOrEmail(name: string, email: string): Promise<IUserDocument[]> {
+	public async findUsersByNameOrEmail(name: string, email: string): Promise<IUserDocument[]> {
+		console.log('this is called');
 		const user = await User.find({
 			$or: [
 				{
@@ -28,7 +30,7 @@ class UserRepository implements IUserRepository {
 		return user;
 	}
 
-	async findOneUserByNameOrEmail(name: string, email: string): Promise<IUserDocument> {
+	public async findOneUserByNameOrEmail(name: string, email: string): Promise<IUserDocument> {
 		const user = await User.findOne({
 			$or: [
 				{

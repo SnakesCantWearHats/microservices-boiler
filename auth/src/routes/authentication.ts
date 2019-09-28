@@ -3,22 +3,22 @@ import express from 'express';
 import container from '../services/container';
 import { SERVICE_IDENTIFIERS } from '../contants';
 import authentication from '../middleware/authentication';
+import { IUserService } from '../services/user/user.interface';
 
 const router = express.Router();
 
 router.post('/login', authentication, (req, res, next) => {
-	console.log('login route');
 	res.json({
 		service: 'auth',
 		success: true
 	});
 });
 
-router.post('/register', (req, res, next) => {
-	const userService = container(SERVICE_IDENTIFIERS.UserService);
+router.post('/register', async (req, res, next) => {
 	const { name, email, password } = req.body;
+	const userService = container.get<IUserService>(SERVICE_IDENTIFIERS.UserService);
 	try {
-		userService.createNewUser(name, email, password);
+		await userService.createNewUser(name, email, password);
 	} catch(err) {
 		res.json({
 			service: 'auth',

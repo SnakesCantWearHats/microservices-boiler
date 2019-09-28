@@ -3,8 +3,14 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 
 import routes from './routing';
+import db from './mongoose';
 
 const app = express();
+
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+	console.log('Connection succesful');
+});
 
 const port = 4000;
 

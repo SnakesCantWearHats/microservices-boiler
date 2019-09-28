@@ -1,11 +1,13 @@
+import { Container } from 'inversify';
+
+import { SERVICE_IDENTIFIERS } from '../contants';
 import UserService from './user/user.service';
+import { IUserService, IUserRepository } from './user/user.interface';
+import UserRepository from './user/user.repository';
 
-const services = {
-	UserService: new UserService(),
-};
+const container = new Container();
 
-const container = (name) => {
-	return services[name];
-};
+container.bind<IUserService>(SERVICE_IDENTIFIERS.UserService).to(UserService).inSingletonScope();
+container.bind<IUserRepository>(SERVICE_IDENTIFIERS.UserRepository).to(UserRepository).inSingletonScope();
 
 export default container;
