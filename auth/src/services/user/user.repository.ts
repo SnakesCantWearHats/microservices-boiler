@@ -30,7 +30,7 @@ class UserRepository implements IUserRepository {
 		return user;
 	}
 
-	public async findOneUserByNameOrEmail(name: string, email: string): Promise<IUserDocument> {
+	public async findOneUserByNameOrEmail(name: string, email: string): Promise<IUserDocument | null> {
 		const user = await User.findOne({
 			$or: [
 				{

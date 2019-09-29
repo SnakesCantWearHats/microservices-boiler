@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 import container from '../services/container';
-import { SERVICE_IDENTIFIERS } from '../contants';
+import { SERVICE_IDENTIFIERS } from '../constants';
 import { IUserService } from '../services/user/user.interface';
 import secret from '../SECRET';
 import { tokenUser } from './types';

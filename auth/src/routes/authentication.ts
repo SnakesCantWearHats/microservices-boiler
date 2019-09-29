@@ -1,7 +1,7 @@
 import express from 'express';
 
 import container from '../services/container';
-import { SERVICE_IDENTIFIERS } from '../contants';
+import { SERVICE_IDENTIFIERS } from '../constants';
 import authentication from '../middleware/authentication';
 import { IUserService } from '../services/user/user.interface';
 

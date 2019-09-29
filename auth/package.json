@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node_modules/tsc-watch/index.js --onSuccess 'node dist/server.js' --onFailure 'echo Compilation Failed!' --compiler typescript/bin/tsc",
-    "test": "./node_modules/.bin/jest --config=jest-config.js"
+    "test": "./node_modules/.bin/jest --config=jest-config.js --coverage"
   },
   "author": "Adomas Skliutas",
   "license": "MIT",

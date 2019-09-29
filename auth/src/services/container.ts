@@ -1,6 +1,6 @@
 import { Container } from 'inversify';
 
-import { SERVICE_IDENTIFIERS } from '../contants';
+import { SERVICE_IDENTIFIERS } from '../constants';
 import UserService from './user/user.service';
 import { IUserService, IUserRepository } from './user/user.interface';
 import UserRepository from './user/user.repository';

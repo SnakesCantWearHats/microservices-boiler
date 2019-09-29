@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import { inject, injectable } from 'inversify';
 
 import { IUserService, IUserRepository, IUserDocument } from './user.interface';
-import { SERVICE_IDENTIFIERS } from '../../contants';
+import { SERVICE_IDENTIFIERS } from '../../constants';
 
 const saltRounds = 12;
 
