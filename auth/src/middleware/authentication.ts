@@ -9,7 +9,7 @@ import secret from '../SECRET';
 import { tokenUser } from './types';
 
 
-const checkUserAndGenNewToken = async (name: string, email: string, password: string) => {
+export const checkUserAndGenNewToken = async (name: string, email: string, password: string) => {
 	const userService = container.get<IUserService>(SERVICE_IDENTIFIERS.UserService);
 
 	const user = await userService.findUserByNameOrEmail(name, email);
@@ -25,7 +25,7 @@ const checkUserAndGenNewToken = async (name: string, email: string, password: st
 	}
 };
 
-const authentication = async (req: Request, res: Response, next: NextFunction) => {
+export const authentication = async (req: Request, res: Response, next: NextFunction) => {
 	const { name, email, password } = req.body;
 
 	try {

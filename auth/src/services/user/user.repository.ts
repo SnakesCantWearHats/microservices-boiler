@@ -16,7 +16,6 @@ class UserRepository implements IUserRepository {
 	}
 
 	public async findUsersByNameOrEmail(name: string, email: string): Promise<IUserDocument[]> {
-		console.log('this is called');
 		const user = await User.find({
 			$or: [
 				{
