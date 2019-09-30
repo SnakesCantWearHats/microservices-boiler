@@ -10,15 +10,17 @@ services:
     volumes:
       - ./.db-data/auth-db:/data/db
     ports:
-      - 27017-27019:27017-27019
-  # backend-mongo:
-  #   image: mongo:4.0
-  #   # restart: always
-  #   # environment:
-  #   #   - MONGO_INITDB_ROOT_USERNAME=backend
-  #   #   - MONGO_INITDB_ROOT_PASSWORD=security
-  #   volumes:
-  #     - ./.db-data/backend-db:/data/db
+      - 27020:27017
+  backend-mongo:
+    image: mongo:4.0
+    # restart: always
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=backend
+    #   - MONGO_INITDB_ROOT_PASSWORD=security
+    volumes:
+      - ./.db-data/backend-db:/data/db
+    ports:
+      - 27021:27017
   auth-service:
     container_name: auth-service
     build: ./auth
@@ -32,16 +34,14 @@ services:
     volumes:
       - ./auth:/home/node/app
     command: bash -c "npm start"
-  # backend:
-  #   container_name: backend
-  #   build: ./backend
-  #   working_dir: /home/node/app
-  #   depends_on:
-  #     - backend-mongo
-  #   environment:
-  #     - NODE_ENV=development
-  #   ports:
-  #     - 4001:4000
-  #   volumes:
-  #     - ./backend:/home/node/app
-  #   command: bash -c "npm start"
+  backend:
+    container_name: backend
+    build: ./backend
+    working_dir: /home/node/app
+    depends_on:
+      - backend-mongo
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./backend:/home/node/app
+    command: bash -c "npm start"

@@ -11,7 +11,7 @@ const app = express();
 
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-	console.log('Connection succesful');
+	console.log('Connection to auth db succesful');
 });
 
 const port = 4000;
