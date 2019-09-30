@@ -1,13 +1,19 @@
 import express from 'express';
+import passport from 'passport';
 
 import container from '../services/container';
 import { SERVICE_IDENTIFIERS } from '../constants';
-import authentication from '../middleware/authentication';
 import { IUserService } from '../services/user/user.interface';
+import addJwtToHeader from '../middleware/jwt-token';
 
 const router = express.Router();
 
-router.post('/login', authentication, (req, res, next) => {
+router.get('/secure', passport.authenticate('jwt'), (req, res) => {
+	res.json({ sent: 'You are authorized' });
+});
+
+router.post('/login', passport.authenticate('local'), addJwtToHeader, (req, res, next) => {
+	
 	res.json({
 		service: 'auth',
 		success: true
@@ -15,14 +21,12 @@ router.post('/login', authentication, (req, res, next) => {
 });
 
 router.post('/register', async (req, res, next) => {
-	const { name, email, password } = req.body;
+	const { username, email, password } = req.body;
 	const userService = container.get<IUserService>(SERVICE_IDENTIFIERS.UserService);
 	try {
-		await userService.createNewUser(name, email, password);
+		await userService.createNewUser(username, email, password);
 	} catch(err) {
 		res.json({
-			service: 'auth',
-			success: false,
 			message: err,
 		});
 	}

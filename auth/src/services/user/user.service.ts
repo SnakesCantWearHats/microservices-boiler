@@ -23,11 +23,11 @@ class UserService implements IUserService {
 		this.userRepository.createUser(name, email, hashedPassword);
 	}
 
-	public async findUserByNameOrEmail(name: string, email: string): Promise<IUserDocument> {
-		const user = await this.userRepository.findOneUserByNameOrEmail(name, email);
+	public async findUserByEmail(email: string): Promise<IUserDocument> {
+		const user = await this.userRepository.findUserByEmail(email);
 
-		if(!user) {
-			throw new Error(`User ${name} with email ${email} doesn't exist.`);
+		if (!user) {
+			throw new Error(`User with email ${email} does not exist.`);
 		}
 		return user;
 	}

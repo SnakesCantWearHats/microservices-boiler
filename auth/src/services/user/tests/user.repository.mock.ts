@@ -6,7 +6,8 @@ const _id: ObjectId = '12342233' as any;
 export const document: IUserDocument = {
 	_id,
 	name: 'user_exists',
-	email: 'test@test.com',
+	role: 'Normal',
+	email: 'user_exists@test.com',
 	password: '123432'
 } as any;
 
@@ -16,7 +17,7 @@ export class MockUserRepository implements IUserRepository {
 		return new Promise((resolve => resolve()));
 	}
 	public async findUsersByNameOrEmail(name: string, email: string): Promise<IUserDocument[]> {
-		if (name === 'user_exists') {
+		if (email === document.email) {
 			const documents: IUserDocument[] = [
 				document
 			] as any;
@@ -25,8 +26,8 @@ export class MockUserRepository implements IUserRepository {
 		return new Promise(resolve => resolve([]));
 	}
 
-	public async findOneUserByNameOrEmail(name: string, email: string): Promise<IUserDocument | null> {
-		if (name === 'user_exists') {
+	public async findUserByEmail(email: string): Promise<IUserDocument | null> {
+		if (email === document.email) {
 			return new Promise(resolve => resolve(document));
 		}
 		return new Promise(resolve => resolve(null));

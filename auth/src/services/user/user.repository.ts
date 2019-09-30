@@ -10,6 +10,7 @@ class UserRepository implements IUserRepository {
 		const newUser = new User({
 			name,
 			password,
+			role: 'Normal',
 			email,
 		});
 		await newUser.save();
@@ -29,16 +30,9 @@ class UserRepository implements IUserRepository {
 		return user;
 	}
 
-	public async findOneUserByNameOrEmail(name: string, email: string): Promise<IUserDocument | null> {
+	public async findUserByEmail(email: string): Promise<IUserDocument | null> {
 		const user = await User.findOne({
-			$or: [
-				{
-					name
-				},
-				{
-					email
-				}
-			]
+			email
 		}).lean();
 		return user;
 	}
