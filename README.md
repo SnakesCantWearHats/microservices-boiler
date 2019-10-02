@@ -1,4 +1,4 @@
-# Node microservices boiler plate for fast development
+# Node microservices boilerplate for fast development
 ## Info
 This is a boiler code for nodeJS microservices. It consists of two microservices, one for authentication (used as a gateway) and second for backend. The projects idea is to have some kind of boiler plate with typescript, inversifyJS, tests, authentication and routing setup for anyone to just clone this repo and start developing whatever one wants.
 
