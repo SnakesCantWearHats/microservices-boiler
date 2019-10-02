@@ -3,13 +3,13 @@ import { VerifyFunction, Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as JwtStrategy, ExtractJwt, VerifiedCallback } from 'passport-jwt';
 import bcrypt from 'bcrypt';
 
-import container from '../services/container';
-import { SERVICE_IDENTIFIERS } from '../constants';
+import container from '../container';
+import { SERVICE_IDENTIFIER } from '../constants';
 import { IUserService } from '../services/user/user.interface';
 import secret from '../SECRET';
 
 const verifyFunction: VerifyFunction = async (email, password, done) => {
-	const userService = container.get<IUserService>(SERVICE_IDENTIFIERS.UserService);
+	const userService = container.get<IUserService>(SERVICE_IDENTIFIER.UserService);
 	try {
 		const user = await userService.findUserByEmail(email);
 		if (!user) {
@@ -31,7 +31,7 @@ const opts = {
 	secretOrKey: secret,
 };
 const jwtFunction: VerifiedCallback = async (jwtPayload, done) => {
-	const userService = container.get<IUserService>(SERVICE_IDENTIFIERS.UserService);
+	const userService = container.get<IUserService>(SERVICE_IDENTIFIER.UserService);
 
 	try {
 		const { email } = jwtPayload;

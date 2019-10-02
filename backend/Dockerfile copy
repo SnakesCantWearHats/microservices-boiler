@@ -1,8 +1,0 @@
-FROM node:10.16
-
-COPY package.json package.json
-
-RUN npm install
-RUN npm i -D jest
-
-EXPOSE 4000

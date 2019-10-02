@@ -2,6 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 
 import db from './mongoose';
+import routes from './routing';
 
 const app = express();
 
@@ -19,8 +20,6 @@ app.get('/ping', (req, res) => {
 	res.json({ pong: 'pong' });
 });
 
-app.get('/', (req, res) => {
-	res.json({ service: 'Backend', success: true });
-});
+app.use('/', routes);
 
 app.listen(port, () => console.log(`Backend service is listening on port ${port}`))

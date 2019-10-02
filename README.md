@@ -1,15 +1,18 @@
 # Node microservices boiler plate for fast development
-WIP
 ## Info
-This is a boiler code for nodeJS microservices. It consists of two microservices, one for authentication (used as a gateway) and second for backend. The project will have nginx server set up for easy routing which will let developer to split up backend in to other microservices with ease.
+This is a boiler code for nodeJS microservices. It consists of two microservices, one for authentication (used as a gateway) and second for backend. The projects idea is to have some kind of boiler plate with typescript, inversifyJS, tests, authentication and routing setup for anyone to just clone this repo and start developing whatever one wants.
+
 ## Setup
 Have docker installed and started as a daemon. Clone this repo and `cd` in to it.
-Then launch
-```bash
-npm start
-```
+`docker-compose up` or just `npm start` will just build and launch the project.
+To run tests - `npm run test`, or if you want to run some any one of the microservices tests run `npm run test:<microservice>`
 
-# Auth service
-This service is meant to take care of all authorization and authentication. In here developer will have to define entry routes and where those routes should travel in the back-end. There are two middleware functions defined for this authorization (which should only be used in the `/login` route) and authentication which will call next() if token is correct, this middleware should be used in all routes that are not public.
+## Auth service
+This service is meant to take care of all authorization and authentication. In here developer will have to define entry routes and where those routes should travel in the back-end. For this passport middleware should be used. `passport.authenticate('local')` is used only for login, this strategy looks at the body for email and password, `passport.authenticate('jwt)` is used for protected routes when user is already logged in and has header `Authorization: Bearer <token>`.
 
-This will just launch `docker-compose up` and build and launch the project
+## Backend
+This microservice is supposed to be just the general server for initial development, where everything else goes and which could be separated in to different microservices later on.
+
+## License
+
+MIT

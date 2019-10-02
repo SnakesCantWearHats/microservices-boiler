@@ -1,8 +1,8 @@
 import express from 'express';
 import passport from 'passport';
 
-import container from '../services/container';
-import { SERVICE_IDENTIFIERS } from '../constants';
+import container from '../container';
+import { SERVICE_IDENTIFIER } from '../constants';
 import { IUserService } from '../services/user/user.interface';
 import addJwtToHeader from '../middleware/jwt-token';
 
@@ -22,7 +22,7 @@ router.post('/login', passport.authenticate('local'), addJwtToHeader, (req, res,
 
 router.post('/register', async (req, res, next) => {
 	const { username, email, password } = req.body;
-	const userService = container.get<IUserService>(SERVICE_IDENTIFIERS.UserService);
+	const userService = container.get<IUserService>(SERVICE_IDENTIFIER.UserService);
 	try {
 		await userService.createNewUser(username, email, password);
 	} catch(err) {

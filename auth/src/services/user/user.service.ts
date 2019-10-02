@@ -3,13 +3,13 @@ import bcrypt from 'bcrypt';
 import { inject, injectable } from 'inversify';
 
 import { IUserService, IUserRepository, IUserDocument } from './user.interface';
-import { SERVICE_IDENTIFIERS } from '../../constants';
+import { SERVICE_IDENTIFIER } from '../../constants';
 
 const saltRounds = 12;
 
 @injectable()
 class UserService implements IUserService {
-	@inject(SERVICE_IDENTIFIERS.UserRepository) private userRepository: IUserRepository;
+	@inject(SERVICE_IDENTIFIER.UserRepository) private userRepository: IUserRepository;
 
 	public async createNewUser(name: string, email: string, password: string): Promise<void> {
 		if (!name || !email || !password) {
