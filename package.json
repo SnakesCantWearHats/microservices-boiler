@@ -1,5 +1,5 @@
 {
-  "name": "microservices_v2",
+  "name": "typescript-mongo-inversify-microservices-boilerplate",
   "version": "0.0.1",
   "description": "Boilerplate project for initializing microservices (frontend, backend and authorization gateway). Also let easy editing and adding new miscroservices.",
   "main": "index.js",
