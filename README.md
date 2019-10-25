@@ -10,7 +10,7 @@ To run tests - `npm run test`.
 ## Backend
 This service has built in authentication via /v1/api/auth/login and /v1/api/auth/register endpoints. These are managed by passport js and have authentication middleware. `passport.authenticate('local')` is used only for login, this strategy looks at the body for email and password, `passport.authenticate('jwt)` is used for protected routes when user is already logged in and has header `Authorization: Bearer <token>`.
 
-This service has inversify, typescript nd joi validation setup.
+This service has inversify, typescript and joi validation setup.
 
 ## License
 

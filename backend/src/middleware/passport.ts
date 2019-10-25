@@ -11,7 +11,7 @@ import secret from '../SECRET';
 const verifyFunction: VerifyFunction = async (email, password, done) => {
 	const userService = container.get<IUserService>(SERVICE_IDENTIFIER.UserService);
 	try {
-		const user = await userService.findUserByEmail(email);
+		const user = await userService.findUserByEmail(email.toLowerCase());
 		if (!user) {
 			return done(null, false, { message: 'Incorrect name or email.' })
 		}
@@ -24,7 +24,12 @@ const verifyFunction: VerifyFunction = async (email, password, done) => {
 	}
 };
 
-passport.use(new LocalStrategy({ usernameField: 'email', passwordField: 'password', session: false },verifyFunction));
+passport.use(
+	new LocalStrategy(
+		{ usernameField: 'email', passwordField: 'password', session: false },
+		verifyFunction,
+	) as any
+);
 
 const opts = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -35,7 +40,7 @@ const jwtFunction: VerifiedCallback = async (jwtPayload, done) => {
 
 	try {
 		const { email } = jwtPayload;
-		const user = await userService.findUserByEmail(email);
+		const user = await userService.findUserByEmail(email.toLowerCase());
 		if (!user) {
 			done(null, false, { message: 'Invalid token' });
 		}
@@ -44,7 +49,7 @@ const jwtFunction: VerifiedCallback = async (jwtPayload, done) => {
 		done(error);
 	}
 }
-passport.use(new JwtStrategy(opts, jwtFunction));
+passport.use(new JwtStrategy(opts, jwtFunction) as any);
 
 passport.serializeUser(function(user, done) {
 	done(null, user);

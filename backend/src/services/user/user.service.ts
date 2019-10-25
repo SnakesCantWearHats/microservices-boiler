@@ -15,16 +15,16 @@ class UserService implements IUserService {
 		if (!name || !email || !password) {
 			throw new Error('No name, email and/or password supplied.');
 		}
-		const users = await this.userRepository.findUsersByNameOrEmail(name, email);
+		const users = await this.userRepository.findUsersByNameOrEmail(name.toLowerCase(), email.toLowerCase());
 		if (users.length > 0) {
 			throw new Error('User already exists.');
 		}
 		const hashedPassword = await bcrypt.hash(password, saltRounds);
-		this.userRepository.createUser(name, email, hashedPassword);
+		this.userRepository.createUser(name.toLowerCase(), email.toLowerCase(), hashedPassword);
 	}
 
 	public async findUserByEmail(email: string): Promise<IUserDocument> {
-		const user = await this.userRepository.findUserByEmail(email);
+		const user = await this.userRepository.findUserByEmail(email.toLowerCase());
 
 		if (!user) {
 			throw new Error(`User with email ${email} does not exist.`);
