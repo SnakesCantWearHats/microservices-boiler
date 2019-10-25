@@ -14,7 +14,8 @@
 		"typeRoots": ["./types", "./node_modules/@types"],
 		"strict": true,
 		"declaration": true,
-		"sourceMap": true
+		"sourceMap": true,
+		"noImplicitAny": true,
 	},
 	"include": [
 		"./src/**/*",

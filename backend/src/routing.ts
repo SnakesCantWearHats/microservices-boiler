@@ -1,9 +1,9 @@
 import express, { IRouter, Application } from 'express';
 
-import testRoutes from './routes/test';
+import authRoutes from './routes/authentication';
 
 const router:IRouter<Application> = express.Router();
 
-router.use('/test', testRoutes);
+router.use('/auth', authRoutes);
 
 export default router;

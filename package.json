@@ -10,5 +10,9 @@
     "test": "docker exec -it auth-service bash -c \"npm run test\" && docker exec -it backend bash -c \"npm run test\""
   },
   "author": "Adomas Skliutas",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/sinon": "^7.5.0",
+    "sinon": "^7.5.0"
+  }
 }
